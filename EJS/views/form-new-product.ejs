@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/estilo.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Carga un nuevo producto</h1>
+    <form action="/products" method="post">
+        <label for="nombre">
+            Ingrese el nombre del producto:
+        </label>
+        <input placeholder="Nombre del producto" name="nombre" id="nombre" required/>
+        <label for="precio">
+            Ingrese el precio del producto:
+        </label>
+        <input placeholder="Precio de producto" name="precio" type="number" id="precio" required  />
+
+        <input type="submit" value="Crear producto"/>
+    </form>
+</body>
+</html>
