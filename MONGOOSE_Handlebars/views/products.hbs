@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <h1>Lista de productos</h1>
-    <div class="productsContainer">
+    {{ backgroundColor}}
+    <div class="productsContainer" >
         {{#each products}}
-            <div class="productCard">
+            <div  class="card">
                 <h2>{{nombre}}</h2>
-                <a>Ver detalle</a>
+                <a href="/product/detail?productId={{id}}&nombre=pepe">Ver detalle</a>
                 <hr/>
             </div>
         {{/each}}

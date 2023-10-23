@@ -27,6 +27,7 @@ mongoose.connect(CONNECTION_URL,  {
 
 app.set('view engine', 'hbs')
 app.set('views', __dirname + '/views')
+app.use(express.static(__dirname + '/public'))
 
 
 //ENDPOINTS
@@ -40,6 +41,19 @@ app.get('/products', async (req, res) =>{
     catch(err){
         res.status(500).send('Error al obtener la lista de productos')
     }
+})
+/* request, response */
+app.get('/product/detail', async (req, res) =>{
+    const {productId, nombre} = req.query 
+    const product =  await Product.findById(productId)
+    if(product){
+        res.render('detail', {product})
+    }
+    else{
+        res.send('<h2>Error 404, pagina no encontrada <a href="/products">Volver</a></h2>')
+    }
+    console.log(productId, nombre)
+    
 })
 
 
