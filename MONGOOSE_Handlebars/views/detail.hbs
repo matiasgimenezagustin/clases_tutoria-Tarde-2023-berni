@@ -13,6 +13,13 @@
     <p>
         {{product.descripcion}}
     </p>
-    
+    <button onclick="eliminar()" class="btn-delete"  id="{{product.id}}">Eliminar</button>
+    <script>
+        function eliminar (){
+            const productId = document.querySelector('.btn-delete').id
+        
+            fetch('http://localhost:8080/product?productId=' + productId , {method: 'DELETE'})
+        }
+    </script>
 </body>
 </html>

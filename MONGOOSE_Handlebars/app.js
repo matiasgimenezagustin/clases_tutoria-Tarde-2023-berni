@@ -92,6 +92,12 @@ app.post('/product/new', async (req, res) =>{
     
 })
 
+app.delete('/product', (req, res) =>{
+    const {productId} = req.query
+    console.log(productId)
+    res.redirect('/products')
+})
+
 app.listen(PORT, () =>{
     console.log(`El servidor se esta escuchando en http://localhost:${PORT}/products`)
 })
