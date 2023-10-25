@@ -3,26 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
     <title>Document</title>
 </head>
 <body>
     <h1>Completa el siguiente formulario para cargar tu producto</h1>   
     <form action="/product/new" method="POST">
         <div>
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre"/> 
+            <label for="nombre">Nombre:</label><br>
+            <input type="text" id="nombre" name="nombre" required/> 
         </div>
         <div>
-            <label for="precio">Precio:</label>
-            <input type="number" id="precio" name="precio"/>
+            <label for="precio">Precio:</label><br>
+            <input type="number" id="precio" name="precio" required/>
         </div>
         <div>
-            <label for="stock">Stock:</label>
-            <input type="number" id="stock" name="stock"/>
+            <label for="stock">Stock:</label><br>
+            <input type="number" id="stock" name="stock" required/>
         </div>
         <div>
-            <label for="descripcion">Descripcion:</label>
-            <textarea id="descripcion" name="descripcion">
+            <label for="descripcion">Descripcion:</label><br>
+            <textarea id="descripcion" name="descripcion" required>
 
             </textarea>
         </div>
@@ -30,5 +31,9 @@
             Cargar producto
         </button>
     </form>
+
+    {{#if error}}
+        <span class="errorText">{{error}}</span>
+    {{/if}}
 </body>
 </html>

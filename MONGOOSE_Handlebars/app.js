@@ -28,6 +28,22 @@ mongoose.connect(CONNECTION_URL,  {
 app.set('view engine', 'hbs')
 app.set('views', __dirname + '/views')
 app.use(express.static(__dirname + '/public'))
+app.use(express.urlencoded({extended: false})) //Middlewere que nos permite recibir formularios por el body
+
+
+const createProduct = async (product) =>{
+    try {
+        const newProduct = new Product(product)
+        await newProduct.save()
+        console.log('producto guardado')
+        return true
+    }
+    catch(error){
+        throw error
+        return null
+    }
+} 
+
 
 
 //ENDPOINTS
@@ -61,22 +77,25 @@ app.get('/product/new', (req, res) =>{
     res.render('newProduct')
 })
 
-
+app.post('/product/new', async (req, res) =>{
+    const {nombre, descripcion, stock, precio} = req.body
+    if(nombre && descripcion && stock && precio){
+        const result = await createProduct({nombre, descripcion, stock, precio})
+        if(result){
+            res.redirect('/products')
+        }
+        else{
+            res.render('error')
+        }
+    }
+    res.render('newProduct', {error: 'no has llenado todos los campos'})
+    
+})
 
 app.listen(PORT, () =>{
     console.log(`El servidor se esta escuchando en http://localhost:${PORT}/products`)
 })
 
 
-const createProduct = async (product) =>{
-    try {
-        const newProduct = new Product(product)
-        await newProduct.save()
-        console.log('producto guardado')
-    }
-    catch(error){
-        throw error
-    }
-} 
 
 

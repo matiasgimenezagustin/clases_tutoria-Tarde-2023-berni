@@ -39,3 +39,7 @@ body{
     color: white;
     border: none;
 }
+
+.errorText{
+    color:  red;
+}
