@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Completa el siguiente formulario para cargar tu producto</h1>   
+    <form action="/product/new" method="POST">
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre"/> 
+        </div>
+        <div>
+            <label for="precio">Precio:</label>
+            <input type="number" id="precio" name="precio"/>
+        </div>
+        <div>
+            <label for="stock">Stock:</label>
+            <input type="number" id="stock" name="stock"/>
+        </div>
+        <div>
+            <label for="descripcion">Descripcion:</label>
+            <textarea id="descripcion" name="descripcion">
+
+            </textarea>
+        </div>
+        <button type="submit">
+            Cargar producto
+        </button>
+    </form>
+</body>
+</html>

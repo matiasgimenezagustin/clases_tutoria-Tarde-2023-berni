@@ -50,11 +50,17 @@ app.get('/product/detail', async (req, res) =>{
         res.render('detail', {product})
     }
     else{
-        res.send('<h2>Error 404, pagina no encontrada <a href="/products">Volver</a></h2>')
+        res.render('error')
     }
-    console.log(productId, nombre)
     
 })
+
+//Creamos el endpoint product/new
+
+app.get('/product/new', (req, res) =>{
+    res.render('newProduct')
+})
+
 
 
 app.listen(PORT, () =>{
