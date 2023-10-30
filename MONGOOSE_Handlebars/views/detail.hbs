@@ -7,16 +7,21 @@
 
 </head>
 <body>
-    {{#if editMode}}
-    <h1>El nombre del producto es: <input type="text" value="{{product.nombre}}"></h1>
-    <h2>Precio: <input type="number" value="{{product.precio}}"></h2>
-    <span>Stock: <input type="text" value="{{product.stock}}"> </span>
-    <textarea>
-        {{product.descripcion}}
-    </textarea>
 
-    {{/if}}
-    {{#else}}
+    {{#if editMode}}
+    <form  method="POST" action="/product/edit">
+        <h1>El nombre del producto es: <input type="text" value="{{product.nombre}}" name="nombre"></h1>
+        <h2>Precio: <input type="number" value="{{product.precio}}" name="precio"></h2>
+        <span>Stock: <input type="text" value="{{product.stock}}" name="stock"> </span>
+        <textarea name="descripcion">
+            {{product.descripcion}}
+        </textarea>
+        <button type="submit">Confirmar</button>
+        <input type="hidden" value="{{product.id}}" name="id">
+        <a href="/product/detail?productId={{product.id}}">Cancelar</a>
+    </form>
+
+    {{else}}
         <h1>El nombre del producto es: {{product.nombre}}</h1>
         <h2>Precio: {{product.precio}}</h2>
         <span>Stock: {{product.stock}}</span>
@@ -25,8 +30,8 @@
         </p>
         <button onclick="eliminar()" class="btn-delete"  id="{{product.id}}">Eliminar</button>
         <a href="/services/editmode?productId={{product.id}}">Activar Edicion</a>
-    {{/else}}
-    
+
+    {{/if}}
     <script>
         function eliminar (){
             const productId = document.querySelector('.btn-delete').id

@@ -60,15 +60,25 @@ app.get('/products', async (req, res) =>{
 })
 /* request, response */
 app.get('/product/detail', async (req, res) =>{
-    const {productId, nombre} = req.query 
+    const {productId} = req.query 
+    
     const product =  await Product.findById(productId)
+    console.log(product)
     if(product){
-        res.render('detail', {product})
+        res.render('detail', {product, editMode: false})
     }
     else{
         res.render('error')
     }
     
+})
+
+app.post('/product/edit', async (req, res) =>{
+    const {nombre, descripcion, stock, precio, id} = req.body
+
+    const updatedProduct = await Product.findByIdAndUpdate(id, {precio, stock, nombre, descripcion}, {new: true})
+
+    res.redirect('/product/detail?productId=' + id)
 })
 
 //Creamos el endpoint product/new
