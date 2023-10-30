@@ -7,19 +7,34 @@
 
 </head>
 <body>
-    <h1>El nombre del producto es: {{product.nombre}}</h1>
-    <h2>Precio: {{product.precio}}</h2>
-    <span>Stock: {{product.stock}}</span>
-    <p>
+    {{#if editMode}}
+    <h1>El nombre del producto es: <input type="text" value="{{product.nombre}}"></h1>
+    <h2>Precio: <input type="number" value="{{product.precio}}"></h2>
+    <span>Stock: <input type="text" value="{{product.stock}}"> </span>
+    <textarea>
         {{product.descripcion}}
-    </p>
-    <button onclick="eliminar()" class="btn-delete"  id="{{product.id}}">Eliminar</button>
+    </textarea>
+
+    {{/if}}
+    {{#else}}
+        <h1>El nombre del producto es: {{product.nombre}}</h1>
+        <h2>Precio: {{product.precio}}</h2>
+        <span>Stock: {{product.stock}}</span>
+        <p>
+            {{product.descripcion}}
+        </p>
+        <button onclick="eliminar()" class="btn-delete"  id="{{product.id}}">Eliminar</button>
+        <a href="/services/editmode?productId={{product.id}}">Activar Edicion</a>
+    {{/else}}
+    
     <script>
         function eliminar (){
             const productId = document.querySelector('.btn-delete').id
         
             fetch('http://localhost:8080/product?productId=' + productId , {method: 'DELETE'})
         }
+
+        
     </script>
 </body>
 </html>

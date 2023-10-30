@@ -98,6 +98,17 @@ app.delete('/product', (req, res) =>{
     res.redirect('/products')
 })
 
+app.get('/services/editmode', async (req, res) =>{
+    const {productId} = req.query 
+    const product =  await Product.findById(productId)
+    if(product){
+        res.render('detail', {product, editMode: true})
+    }
+    else{
+        res.render('error')
+    }
+})
+
 app.listen(PORT, () =>{
     console.log(`El servidor se esta escuchando en http://localhost:${PORT}/products`)
 })
