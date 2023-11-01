@@ -1,26 +1,15 @@
 const express = require('express')
 const Product = require('../models/Product')
+const { createProduct, getProducts } = require('../dao/controllers/productController')
 
 const productRouter = express.Router()
 
 
 
-const createProduct = async (product) =>{
-    try {
-        const newProduct = new Product(product)
-        await newProduct.save()
-        console.log('producto guardado')
-        return true
-    }
-    catch(error){
-        throw error
-        return null
-    }
-} 
 
 productRouter.get('/', async (req, res) =>{
     try{
-        const products = await  Product.find()
+        const products = await  getProducts()
         console.log(products)
         res.status(200).render('products', {products})
     }
@@ -62,7 +51,8 @@ productRouter.get('/new', (req, res) =>{
 productRouter.post('/new', async (req, res) =>{
     const {nombre, descripcion, stock, precio} = req.body
     if(nombre && descripcion && stock && precio){
-        const result = await createProduct({nombre, descripcion, stock, precio})
+        const result = await createProduct
+        ({nombre, descripcion, stock, precio})
         if(result){
             res.redirect('/products')
         }
