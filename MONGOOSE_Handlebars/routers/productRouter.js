@@ -1,6 +1,6 @@
 const express = require('express')
 const Product = require('../models/Product')
-const { createProduct, getProducts } = require('../dao/controllers/productController')
+const { createProduct, getProducts, deleteProductById } = require('../dao/controllers/productController')
 
 const productRouter = express.Router()
 
@@ -10,7 +10,7 @@ const productRouter = express.Router()
 productRouter.get('/', async (req, res) =>{
     try{
         const products = await  getProducts()
-        console.log(products)
+
         res.status(200).render('products', {products})
     }
     catch(err){
@@ -23,7 +23,7 @@ productRouter.get('/detail', async (req, res) =>{
     const {productId} = req.query 
     
     const product =  await Product.findById(productId)
-    console.log(product)
+
     if(product){
         res.render('detail', {product, editMode: false})
     }
@@ -64,9 +64,9 @@ productRouter.post('/new', async (req, res) =>{
     
 })
 
-productRouter.delete('/', (req, res) =>{
-    const {productId} = req.query
-    console.log(productId)
+productRouter.post('/delete', async (req, res) =>{
+    const {productId} = req.body
+    await deleteProductById(productId)
     res.redirect('/products')
 })
 

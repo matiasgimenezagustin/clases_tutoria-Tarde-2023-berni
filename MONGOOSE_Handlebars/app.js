@@ -38,7 +38,7 @@ app.use(express.urlencoded({extended: false})) //Middlewere que nos permite reci
 
 //ENDPOINTS
 
-app.use('/product', productRouter)
+app.use('/products', productRouter)
 
 app.use('/services', servicesRouter)
 

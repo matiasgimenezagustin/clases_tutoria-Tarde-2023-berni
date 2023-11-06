@@ -28,11 +28,15 @@
         <p>
             {{product.descripcion}}
         </p>
-        <button onclick="eliminar()" class="btn-delete"  id="{{product.id}}">Eliminar</button>
+        <form action="/products/delete" method="post">
+            <input type="hidden" name="productId" value="{{product.id}}">
+            <button class="btn-delete"   type="submit">Eliminar</button>
+        </form>
+        
         <a href="/services/editmode?productId={{product.id}}">Activar Edicion</a>
 
     {{/if}}
-    <script>
+{{!--     <script>
         function eliminar (){
             const productId = document.querySelector('.btn-delete').id
         
@@ -40,6 +44,6 @@
         }
 
         
-    </script>
+    </script> --}}
 </body>
 </html>

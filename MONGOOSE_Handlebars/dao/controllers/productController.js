@@ -7,7 +7,6 @@ const createProduct = async (product) =>{
     try {
         const newProduct = new Product(product)
         await newProduct.save()
-        console.log('producto guardado')
         return true
     }
     catch(error){
@@ -21,5 +20,8 @@ const getProducts = async () =>{
     return await  Product.find()
 }
 
+const deleteProductById = async (productId) =>{
+    return await Product.findByIdAndDelete(productId)
+}
 
-module.exports = {createProduct, getProducts}
+module.exports = {createProduct, getProducts, deleteProductById}
