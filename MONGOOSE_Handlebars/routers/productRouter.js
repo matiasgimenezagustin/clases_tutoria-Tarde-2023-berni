@@ -8,6 +8,7 @@ const productRouter = express.Router()
 
 
 productRouter.get('/', async (req, res) =>{
+    const {order} = req.query
     try{
         const products = await  getProducts()
 
