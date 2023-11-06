@@ -16,8 +16,17 @@ const createProduct = async (product) =>{
 } 
 
 
-const getProducts = async () =>{
-    return await  Product.find()
+const getProducts = async (order) =>{
+    let products  = await  Product.find()
+    console.log('hola')
+    if(order){
+        if(order == 'asc'){
+            return products.sort((a, b) => a.precio - b.precio)
+        }else{
+            return products.sort((a, b) => b.precio - a.precio)
+        }
+    }
+    return products
 }
 
 const deleteProductById = async (productId) =>{

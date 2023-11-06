@@ -10,8 +10,8 @@ const productRouter = express.Router()
 productRouter.get('/', async (req, res) =>{
     const {order} = req.query
     try{
-        const products = await  getProducts()
-
+        const products = await  getProducts(order)
+       
         res.status(200).render('products', {products})
     }
     catch(err){
