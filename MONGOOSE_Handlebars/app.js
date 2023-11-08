@@ -1,9 +1,10 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const Product = require('./models/Product')
+
 const hbs = require('hbs')
-const productRouter = require('./routers/productRouter')
-const servicesRouter = require('./routers/servicesRouter')
+const bcrypt = require('bcrypt')
+const session = require('express-session')
+
 require('dotenv').config()
 
 const app = express()
@@ -25,6 +26,7 @@ mongoose.connect(CONNECTION_URL,  {
     console.error(err)
 })
 
+
 //Configuracion de handlebars
 
 app.set('view engine', 'hbs')
@@ -32,8 +34,16 @@ app.set('views', __dirname + '/views')
 app.use(express.static(__dirname + '/public'))
 app.use(express.urlencoded({extended: false})) //Middlewere que nos permite recibir formularios por el body
 
+app.use(session({
+    secret: 'mi-clave',
+    resave: false, 
+    saveUninitialized: false
+}))
 
 
+
+const productRouter = require('./routers/productRouter')
+const servicesRouter = require('./routers/servicesRouter')
 
 
 //ENDPOINTS
@@ -41,6 +51,16 @@ app.use(express.urlencoded({extended: false})) //Middlewere que nos permite reci
 app.use('/products', productRouter)
 
 app.use('/services', servicesRouter)
+
+
+app.get('/register', (req, res) =>{
+    res.render('register')
+})
+
+app.get('/', (req, res) =>{
+    res.render('login')
+})
+
 
 
 

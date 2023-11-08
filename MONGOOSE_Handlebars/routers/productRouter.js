@@ -1,5 +1,5 @@
 const express = require('express')
-const Product = require('../models/Product')
+const Product = require('../dao/models/Product')
 const { createProduct, getProducts, deleteProductById } = require('../dao/controllers/productController')
 
 const productRouter = express.Router()
