@@ -44,6 +44,7 @@ app.use(session({
 
 const productRouter = require('./routers/productRouter')
 const servicesRouter = require('./routers/servicesRouter')
+const { createUser } = require('./dao/controllers/userController')
 
 
 //ENDPOINTS
@@ -55,6 +56,15 @@ app.use('/services', servicesRouter)
 
 app.get('/register', (req, res) =>{
     res.render('register')
+})
+
+app.post('/register', async (req, res) =>{
+    const user = req.body
+    let sal = 10
+    const hashedPassword = await bcrypt.hash(user.password, sal)
+    let usuarioCreado = await createUser({...user, password: hashedPassword})
+    console.log(usuarioCreado)
+    res.sendStatus(200)
 })
 
 app.get('/', (req, res) =>{
@@ -71,6 +81,8 @@ app.listen(PORT, () =>{
     console.log(`El servidor se esta escuchando en http://localhost:${PORT}/products`)
 })
 
+/* Existe el azar? */
 
+/* Math.random */
 
-
+console.log(Math.random())
