@@ -44,7 +44,7 @@ app.use(session({
 
 const productRouter = require('./routers/productRouter')
 const servicesRouter = require('./routers/servicesRouter')
-const { createUser } = require('./dao/controllers/userController')
+const { createUser, isValidCredentials } = require('./dao/controllers/userController')
 
 
 //ENDPOINTS
@@ -64,14 +64,29 @@ app.post('/register', async (req, res) =>{
     const hashedPassword = await bcrypt.hash(user.password, sal)
     let usuarioCreado = await createUser({...user, password: hashedPassword})
     console.log(usuarioCreado)
-    res.sendStatus(200)
+    res.redirect('login')
 })
 
 app.get('/', (req, res) =>{
     res.render('login')
 })
 
+app.post('/', async (req, res) => {
+    const {email, password} = req.body
+    /* Respuesta para manejar error */
+    const user = {email, password}
 
+    let result = await isValidCredentials(user)
+    if(result.ok){
+        res.redirect('/products')
+    }else{
+        res.render('login', {error: result.message})
+    }
+    
+
+    /* Respuesta para enviar al usuario a la home */
+    /* res.redirect('/dashboard') */
+})
 
 
 //Creamos el endpoint product/new

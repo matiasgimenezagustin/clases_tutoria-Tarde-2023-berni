@@ -1,4 +1,4 @@
-
+const bcrypt = require('bcrypt')
 
 const User = require("../models/User")
 
@@ -13,5 +13,18 @@ const createUser = async  (user) =>{
     return await newUser.save()
 }
 
+const isValidCredentials = async (user) =>{
+    const userFound = await User.findOne({email: user.email})
+    if(userFound){
+        console.log(userFound.password, user.password)
+        const passwordMatched = await bcrypt.compare(userFound.password, user.password)
+        console.log(passwordMatched)
+        if(passwordMatched){
+            return {ok: true, userFound}
+        }
+    }
+    return {ok: false, message: 'No existe un usuario con esas credenciales!'}
+}
+ 
 
-module.exports = {findUserByUsername, createUser}
+module.exports = {findUserByUsername, createUser, isValidCredentials}
