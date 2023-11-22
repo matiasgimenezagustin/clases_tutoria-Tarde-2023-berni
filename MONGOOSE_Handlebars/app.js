@@ -4,10 +4,13 @@ const mongoose = require('mongoose')
 const hbs = require('hbs')
 const bcrypt = require('bcrypt')
 const session = require('express-session')
+const cookieParser = require('cookie-parser')
 
 require('dotenv').config()
 
 const app = express()
+
+app.use(cookieParser())
 
 const PORT = process.env.PORT || 8080
 const DB_NAME = process.env.DB_NAME
@@ -42,14 +45,18 @@ app.use(session({
 
 
 
+
+
+
 const productRouter = require('./routers/productRouter')
 const servicesRouter = require('./routers/servicesRouter')
 const { createUser, isValidCredentials } = require('./dao/controllers/userController')
+const sessionMiddlewere = require('./middleweres/sessionMiddlewere')
 
 
 //ENDPOINTS
 
-app.use('/products', productRouter)
+app.use('/products', sessionMiddlewere, productRouter)
 
 app.use('/services', servicesRouter)
 
@@ -64,7 +71,7 @@ app.post('/register', async (req, res) =>{
     const hashedPassword = await bcrypt.hash(user.password, sal)
     let usuarioCreado = await createUser({...user, password: hashedPassword})
     console.log(usuarioCreado)
-    res.redirect('login')
+    res.redirect('/')
 })
 
 app.get('/', (req, res) =>{
@@ -78,6 +85,8 @@ app.post('/', async (req, res) => {
 
     let result = await isValidCredentials(user)
     if(result.ok){
+        req.session.user = user
+        req.session.colorFavorito = 'black'
         res.redirect('/products')
     }else{
         res.render('login', {error: result.message})
@@ -93,11 +102,9 @@ app.post('/', async (req, res) => {
 
 
 app.listen(PORT, () =>{
-    console.log(`El servidor se esta escuchando en http://localhost:${PORT}/products`)
+    console.log(`El servidor se esta escuchando en http://localhost:${PORT}/`)
 })
 
 /* Existe el azar? */
 
 /* Math.random */
-
-console.log(Math.random())

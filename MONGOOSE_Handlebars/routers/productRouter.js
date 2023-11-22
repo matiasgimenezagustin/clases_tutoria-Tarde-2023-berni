@@ -8,6 +8,11 @@ const productRouter = express.Router()
 
 
 productRouter.get('/', async (req, res) =>{
+   /* 
+    if(!req.session.user){
+        res.redirect('/')
+    } */
+    console.log(req.session)
     const {order} = req.query
     try{
         const products = await  getProducts(order)

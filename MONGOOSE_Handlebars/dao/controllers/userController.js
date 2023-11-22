@@ -15,9 +15,12 @@ const createUser = async  (user) =>{
 
 const isValidCredentials = async (user) =>{
     const userFound = await User.findOne({email: user.email})
+    console.log('hola', userFound)
+    console.log(user)
     if(userFound){
         console.log(userFound.password, user.password)
-        const passwordMatched = await bcrypt.compare(userFound.password, user.password)
+        //bcrypt.compare espera recibir el texto a comparar primero y luego el texto hasheado
+        const passwordMatched = await bcrypt.compare(user.password, userFound.password)
         console.log(passwordMatched)
         if(passwordMatched){
             return {ok: true, userFound}
